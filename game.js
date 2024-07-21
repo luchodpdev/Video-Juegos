@@ -47,6 +47,12 @@ function preload () {
         'assets/entities/rockcaracter1.png',
         { frameWidth: 16, frameHeight: 16 }
     )
+
+    this.load.spritesheet(
+        'floorbricksfire',
+        'assets/scenery/overworld/floorbricksfire.png',
+        { frameWidth: 16, frameHeight: 16 }
+    )
     
     this.load.audio('gameover', 'assets/sound/music/gameover.mp3')
     this.load.audio('jump', 'assets/sound/effects/jump.mp3')
@@ -63,6 +69,9 @@ function create () {
     
 
     
+    
+
+    
 
     this.sound.add('hardrock', { volume: 0.3 }).play()
 
@@ -76,12 +85,22 @@ function create () {
     .setGravityY(300)
 
     this.floor = this.physics.add.staticGroup()
+    this.floorbricksfire = this.physics.add.staticGroup()
 
-    this.floor
-        .create(0, config.height -16, 'floorbricks')
+    this.floorbricksfire
+        .create(0, config.height -0.5, 'floorbricks')
         .setOrigin(0, 0.5)
         .refreshBody()
 
+    this.floor
+        .create(0, config.height -0.5, 'floorbricks')
+        .setOrigin(0, 0.5)
+        .refreshBody()
+    
+   
+    this.floorbricksfire = this.add.sprite(0, config.height -16, 'floorbricksfire')
+    .setOrigin(0, 0.5);
+    
     this.floor
         .create(150, config.height -16, 'floorbricks')
         .setOrigin(0, 0.5)
@@ -115,10 +134,12 @@ function create () {
     
     
     this.physics.world.setBounds(0, 0, 2000, config.height)
-    this.physics.add.collider(this.rockcaracter1, this.floor)
+    this.physics.add.collider(this.rockcaracter1, this.floor,)
+    this.physics.add.collider(this.rockcaracter1, this.floorbriksfire,)
 
     this.cameras.main.setBounds(0, 0, 2000, config.height)
     this.cameras.main.startFollow(this.rockcaracter1)
+    
 
     createAnimations(this)
 
@@ -133,9 +154,10 @@ function create () {
 
 function update () {
 
-    
+        this.floorbricksfire.anims.play('floorbricksfire-fire', true)
         this.nubemuerte.anims.play('nubemuerte-background', true)
         this.firebackground.anims.play('firebackground-spritesheet', true)
+        
 
     
 

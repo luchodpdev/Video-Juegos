@@ -55,6 +55,15 @@ export const createAnimations = (game) => {
         frames: [{ key: 'rockcaracter1', frame: 4 }]
     })
 
+    game.anims.create({
+        key: 'floorbricksfire-fire',
+        frames: game.anims.generateFrameNumbers(
+            'floorbricksfire',
+            { start: 0, end: 8 }
+        ),
+        frameRate: 12,
+        repeat: -1
+    })
     
 }
 
